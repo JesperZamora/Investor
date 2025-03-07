@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>11b69511-2b25-424a-88d9-7ad92d3ca8ef</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="Dtos\CommentDtos\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
