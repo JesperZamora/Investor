@@ -1,6 +1,8 @@
-﻿using Api.Data;
+﻿using System.Linq.Expressions;
+using Api.Data;
 using Api.Dtos.StockDtos;
 using Api.Entities;
+using Api.Helpers;
 using Api.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +16,42 @@ namespace Api.Repositories
             _context = context;
         }
 
-        public async Task<List<Stock>> GetAllAsync()
+        public async Task<List<Stock>> GetAllAsync(StockQuery query)
         {
-            return await _context.Stocks.ToListAsync();
+            var stocks = _context.Stocks.AsQueryable();
+
+            var (symbol, companyName, sortBy, decend, pageNumber, pageSize) = query;
+
+            // Filter
+            if (!string.IsNullOrEmpty(symbol))
+            {
+                stocks = stocks.Where(s => s.Symbol.Contains(symbol));
+            }
+
+            // Filter
+            if (!string.IsNullOrEmpty(companyName))
+            {   
+                stocks = stocks.Where(s => s.CompanyName.Contains(companyName));
+            }
+
+            // Sorting
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                if(HasProperty.Check<Stock>(sortBy, out string? propertyName))
+                {
+                    var param = Expression.Parameter(typeof(Stock), "s");
+                    var property = Expression.Property(param, propertyName!);
+                    var convert = Expression.Convert(property,typeof(object));
+                    var lamda = Expression.Lambda<Func<Stock, object>>(convert, param);
+
+                    stocks = decend ? stocks.OrderByDescending(lamda) : stocks.OrderBy(lamda);
+                }
+            }
+
+            // Pagination
+            var skipNumber = (pageNumber - 1) * pageSize;
+
+            return await stocks.Skip(skipNumber).Take(pageSize).ToListAsync();
         }
 
         public async Task<Stock?> GetByIdAsync(int id)

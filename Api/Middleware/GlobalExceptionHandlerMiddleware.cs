@@ -3,12 +3,15 @@ using System.Text.Json;
 
 namespace Api.Middleware
 {
-    public class GlobalExceptionHandler
+    /**
+     * NOT IN USE!
+     * **/
+    public class GlobalExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<GlobalExceptionHandler> _logger;
+        private readonly ILogger<GlobalExceptionHandlerMiddleware> _logger;
 
-        public GlobalExceptionHandler(RequestDelegate next, ILogger<GlobalExceptionHandler> logger)
+        public GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlerMiddleware> logger)
         {
             _next = next;
             _logger = logger;

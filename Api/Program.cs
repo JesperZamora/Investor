@@ -1,4 +1,5 @@
 using Api.Data;
+using Api.Extensions;
 using Api.Interfaces;
 using Api.Middleware;
 using Api.Repositories;
@@ -9,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -31,6 +35,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseMiddleware<GlobalExceptionHandler>();
+//app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+app.UseExceptionHandler();
 
 app.Run();
