@@ -18,7 +18,7 @@ namespace Api.Repositories
 
         public async Task<List<Stock>> GetAllAsync(StockQuery query)
         {
-            var stocks = _context.Stocks.AsQueryable();
+            var stocks = _context.Stocks.Include(c => c.Comments).AsQueryable();
 
             var (symbol, companyName, sortBy, decend, pageNumber, pageSize) = query;
 
@@ -41,7 +41,7 @@ namespace Api.Repositories
                 {
                     var param = Expression.Parameter(typeof(Stock), "s");
                     var property = Expression.Property(param, propertyName!);
-                    var convert = Expression.Convert(property,typeof(object));
+                    var convert = Expression.Convert(property, typeof(object));
                     var lamda = Expression.Lambda<Func<Stock, object>>(convert, param);
 
                     stocks = decend ? stocks.OrderByDescending(lamda) : stocks.OrderBy(lamda);
@@ -56,7 +56,7 @@ namespace Api.Repositories
 
         public async Task<Stock?> GetByIdAsync(int id)
         {
-            return await _context.Stocks.FindAsync(id);
+            return await _context.Stocks.Include(c => c.Comments).FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<Stock?> GetBySymbolAsync(string symbol)
@@ -103,6 +103,11 @@ namespace Api.Repositories
             await _context.SaveChangesAsync();
 
             return stockResult;
+        }
+
+        public async Task<bool> StockExistAsync(int id)
+        {
+            return await _context.Stocks.AnyAsync(s => s.Id == id);
         }
     }
 }

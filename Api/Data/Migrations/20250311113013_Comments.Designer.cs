@@ -4,6 +4,7 @@ using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250311113013_Comments")]
+    partial class Comments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +58,7 @@ namespace Api.Data.Migrations
                         {
                             Id = 1,
                             Content = "Tesla Comment",
-                            CreatedOn = new DateTime(2025, 3, 11, 13, 13, 46, 494, DateTimeKind.Local).AddTicks(4804),
+                            CreatedOn = new DateTime(2025, 3, 11, 12, 30, 13, 413, DateTimeKind.Local).AddTicks(596),
                             StockId = 1,
                             Title = "TSLA Comment"
                         });

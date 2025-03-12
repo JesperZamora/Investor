@@ -1,18 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+﻿using Api.Entities;
 
-namespace Api.Entities
+namespace Api.Dtos.CommentDtos
 {
-    [Table("Comments")]
-    public class Comment
+    public class CommentDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public int? StockId { get; set; }
-
-        //[JsonIgnore]
-        public Stock? Stock { get; set; }
     }
 }

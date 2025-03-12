@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Api.Dtos.StockDtos;
+﻿using Api.Dtos.StockDtos;
 using Api.Entities;
 
 namespace Api.Mappers
@@ -8,7 +7,7 @@ namespace Api.Mappers
     {
         public static StockDto ToStockDto(this Stock stock)
         {
-            return new ()
+            return new()
             {
                 Id = stock.Id,
                 Symbol = stock.Symbol,
@@ -16,13 +15,14 @@ namespace Api.Mappers
                 Purchase = stock.Purchase,
                 LastDiv = stock.LastDiv,
                 Industry = stock.Industry,
-                MarketCap = stock.MarketCap
+                MarketCap = stock.MarketCap,
+                Comments = stock.Comments.Select(c => c.ToCommentDto()).ToList()
             };
         }
 
         public static Stock ToStock(this CreateStockDto createStock)
         {
-            return new()
+            return new ()
             {
                 Symbol = createStock.Symbol,
                 CompanyName = createStock.CompanyName,

@@ -19,9 +19,12 @@ namespace Api.Seeds
             builder.Entity<Stock>().HasData(stocks);
 
 
-            //List<Comment> comments = [];
+            List<Comment> comments = 
+            [
+                new Comment() { Id = 1, Title ="TSLA Comment", Content = "Tesla Comment", StockId = 1 }
+            ];
 
-            //builder.Entity<Stock>().HasData(comments);
+            builder.Entity<Comment>().HasData(comments);
         }
     }
 }

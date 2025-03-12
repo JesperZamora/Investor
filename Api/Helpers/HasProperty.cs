@@ -9,7 +9,8 @@ namespace Api.Helpers
         {
             propertyName = typeof(T).GetProperties()
                 .FirstOrDefault(s => s.Name.ToLower()
-                .Equals(checkProperty.Trim().ToLower(), StringComparison.OrdinalIgnoreCase))?.Name;
+                .Equals(checkProperty.Trim().ToLower(), 
+                StringComparison.OrdinalIgnoreCase))?.Name;
 
             return propertyName != null;
         }

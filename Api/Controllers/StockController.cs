@@ -1,5 +1,4 @@
 ﻿using Api.Dtos.StockDtos;
-using Api.Entities;
 using Api.Helpers;
 using Api.Interfaces;
 using Api.Mappers;
@@ -23,7 +22,9 @@ namespace Api.Controllers
         {
             var stocks = await _stockRepo.GetAllAsync(query);
 
-            return Ok(stocks);
+            var stockDtos = stocks.Select(s => s.ToStockDto());
+
+            return Ok(stockDtos);
         }
 
         [HttpGet("{id:int}")]
@@ -31,7 +32,7 @@ namespace Api.Controllers
         {
             var stock = await _stockRepo.GetByIdAsync(id);
 
-            return stock is null ? NotFound() : Ok(stock);
+            return stock is null ? NotFound() : Ok(stock.ToStockDto());
         }
 
         [HttpPost]

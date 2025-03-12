@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Text.Json.Serialization;
+using Api.Dtos.CommentDtos;
+using Api.Entities;
 
 namespace Api.Dtos.StockDtos
 {
@@ -11,5 +13,6 @@ namespace Api.Dtos.StockDtos
         public decimal LastDiv { get; set; }
         public string Industry { get; set; } = string.Empty;
         public long MarketCap { get; set; }
+        public List<CommentDto> Comments { get; set; } = [];
     }
 }
